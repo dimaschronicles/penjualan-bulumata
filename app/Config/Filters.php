@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\AdminFilter;
 use App\Filters\LoginFilter;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
@@ -25,6 +26,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'isLoggedIn' => LoginFilter::class,
+        'isAdmin' => AdminFilter::class,
     ];
 
     /**
@@ -69,17 +71,35 @@ class Filters extends BaseConfig
     public $filters = [
         'isLoggedIn' => [
             'before' => [
+                'logout/',
                 'dashboard',
+                'dashboard/*',
                 'product',
                 'product/*',
-                'stoct',
-                'stoct/*',
+                'stock',
+                'stock/*',
+                'transaksi/',
+                'transaksi/*',
                 'transaction',
                 'transaction/*',
                 'addcart',
                 'cart',
                 'beli',
                 'beli/*',
+                'profile',
+                'profile/*',
+            ]
+        ],
+        'isAdmin' => [
+            'before' => [
+                'dashboard',
+                'dashboard/*',
+                'product',
+                'product/*',
+                'stock',
+                'stock/*',
+                'transaksi/',
+                'transaksi/*',
             ]
         ]
     ];
