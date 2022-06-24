@@ -67,7 +67,11 @@
                 <div class="mb-3 row">
                     <label for="bukti" class="col-sm-2 col-form-label">Bukti Pembayaran</label>
                     <div class="col-sm-10">
-                        <img src="/img/bukti/<?= $transaksi['bukti_bayar']; ?>" class="img-thumbnail" width="500px">
+                        <?php if ($transaksi['bukti_bayar'] == null) : ?>
+                            <p><i>*Belum melakukan pembayaran</i></p>
+                        <?php else : ?>
+                            <img src="/img/bukti/<?= $transaksi['bukti_bayar']; ?>" class="img-thumbnail" width="500px">
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="mb-3 row">

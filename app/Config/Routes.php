@@ -62,40 +62,43 @@ $routes->get('/register', 'AuthController::register');
 $routes->post('/register', 'AuthController::save');
 $routes->get('/logout', 'AuthController::logout');
 
-$routes->group(
-    'isAdmin',
-    static function ($routes) {
-        // dashboard
-        $routes->get('/dashboard', 'DashboardController::index');
+$routes->post('/forgot', 'AuthController::forgot');
+$routes->get('/forgot_password', 'AuthController::forgot_password');
+$routes->get('/verify/(:any)', 'AuthController::verify/$1');
+$routes->get('/resetpassword/(:any)', 'AuthController::resetpassword/$1');
+$routes->get('/change_password', 'AuthController::change_password', ['filter' => 'isEmail']);
+$routes->post('/reset', 'AuthController::reset', ['filter' => 'isEmail']);
 
-        // produk
-        $routes->get('product/new', 'Product::new');
-        $routes->post('product', 'Product::create');
-        $routes->get('product', 'Product::index');
-        $routes->get('product/(:num)', 'Product::show/$1');
-        $routes->get('product/(:num)/edit', 'Product::edit/$1');
-        $routes->put('product/(:num)', 'Product::update/$1');
-        $routes->delete('product/(:num)', 'Product::delete/$1');
+// dashboard
+$routes->get('/dashboard', 'DashboardController::index', ['filter' => 'isAdmin']);
 
-        // kategori
-        $routes->get('category', 'Category::index');
-        $routes->get('category/new', 'Category::new');
-        $routes->post('category', 'Category::create');
-        $routes->delete('category/(:num)', 'Category::delete/$1');
+// produk
+$routes->get('product/new', 'Product::new');
+$routes->post('product', 'Product::create');
+$routes->get('product', 'Product::index');
+$routes->get('product/(:num)', 'Product::show/$1');
+$routes->get('product/(:num)/edit', 'Product::edit/$1');
+$routes->put('product/(:num)', 'Product::update/$1');
+$routes->delete('product/(:num)', 'Product::delete/$1');
 
-        // stok
-        $routes->get('/stock', 'Stock::index');
-        $routes->get('stock/new', 'Stock::new');
-        $routes->get('stock/min', 'Stock::min');
-        $routes->post('stock', 'Stock::create');
-        $routes->post('stock/min', 'Stock::save');
+// kategori
+$routes->get('category', 'Category::index');
+$routes->get('category/new', 'Category::new');
+$routes->post('category', 'Category::create');
+$routes->delete('category/(:num)', 'Category::delete/$1');
 
-        // transaksi admin
-        $routes->get('/transaksi', 'Transaksi::index');
-        $routes->get('/transaksi/(:num)', 'Transaksi::show/$1');
-        $routes->get('/transaksi/kirim/(:num)', 'Transaksi::kirim/$1');
-    }
-);
+// stok
+$routes->get('/stock', 'Stock::index');
+$routes->get('stock/new', 'Stock::new');
+$routes->get('stock/min', 'Stock::min');
+$routes->post('stock', 'Stock::create');
+$routes->post('stock/min', 'Stock::save');
+
+// transaksi admin
+$routes->get('/transaksi', 'Transaksi::index');
+$routes->get('/transaksi/(:num)', 'Transaksi::show/$1');
+$routes->get('/transaksi/kirim/(:num)', 'Transaksi::kirim/$1');
+
 
 
 /*

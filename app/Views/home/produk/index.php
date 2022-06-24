@@ -44,6 +44,7 @@
                                     <p class="product-category">Tipe/Jenis : <?= $p['nama_jenis']; ?></p>
                                     <h3 class="product-name"><?= $p['nama_produk']; ?></h3>
                                     <h4 class="product-price">Rp <?= format_rupiah($p['harga_produk']); ?>,00</h4>
+                                    <h6 class="product-category">Stok : <?= $p['stok_produk']; ?></h6>
                                     <div class="product-rating">
                                     </div>
                                     <div class="product-btns">

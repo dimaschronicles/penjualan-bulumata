@@ -61,6 +61,12 @@
                     <li>Tipe/Jenis:</li>
                     <li><?= $produk['nama_jenis']; ?></li>
                 </ul>
+                <ul class="product-links">
+                    <strong>
+                        <li>Stok:</li>
+                        <li><?= $produk['stok_produk']; ?></li>
+                    </strong>
+                </ul>
 
             </div>
         </div>

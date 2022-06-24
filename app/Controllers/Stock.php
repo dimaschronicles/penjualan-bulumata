@@ -16,7 +16,7 @@ class Stock extends BaseController
     {
         $data = [
             'title' => 'Stok Produk',
-            'produk' => $this->produk->findAll(),
+            'produk' => $this->produk->orderBy('time_created', 'desc')->findAll(),
         ];
 
         return view('stok/index', $data);

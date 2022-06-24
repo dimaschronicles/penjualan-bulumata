@@ -12,30 +12,31 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Form Login</h3>
+                        <h3 class="panel-title">Reset Password</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="/login" method="POST">
+                        <p class="help-block">Reset password untuk email : <b><?= session()->get('reset_email'); ?></b></p>
+                        <form action="/reset" method="POST">
                             <?= csrf_field(); ?>
-                            <div class="form-group <?= ($validation->hasError('username')) ? 'has-error' : ''; ?>">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?= old('username'); ?>">
-                                <span id="helpBlock2" class="help-block"><?= $validation->getError('username'); ?></span>
-                            </div>
+                            <input type="hidden" name="email" value="<?= session()->get('reset_email'); ?>">
                             <div class="form-group <?= ($validation->hasError('password')) ? 'has-error' : ''; ?>">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 <span id=" helpBlock2" class="help-block"><?= $validation->getError('password'); ?></span>
                             </div>
+                            <div class="form-group <?= ($validation->hasError('password_conf')) ? 'has-error' : ''; ?>">
+                                <label for="password_conf">Password</label>
+                                <input type="password" class="form-control" id="password_conf" name="password_conf" placeholder="Konfirmasi Password">
+                                <span id=" helpBlock2" class="help-block"><?= $validation->getError('password_conf'); ?></span>
+                            </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" onclick="seePassword()"> Show Password
+                                    <input type="checkbox" onclick="seePasswordReg()"> Show Password
                                 </label>
                             </div>
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                <p class="help-block" style="margin-top: 10px;">Belum punya akun? <a href="/register">Daftar disini</a></p>
-                                <p class="help-block" style="margin-top: 10px;"><a href="/forgot_password">Lupa password?</a></p>
+                                <button type="submit" class="btn btn-primary">Reset Password</button>
+                                <p class="help-block" style="margin-top: 10px;"><a href="/login">Kembali</a></p>
                             </div>
                         </form>
                     </div>
