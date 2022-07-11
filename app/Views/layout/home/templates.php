@@ -52,6 +52,7 @@
     <script src="<?= base_url(); ?>/js/nouislider.min.js"></script>
     <script src="<?= base_url(); ?>/js/jquery.zoom.min.js"></script>
     <script src="<?= base_url(); ?>/js/main.js"></script>
+    <?= $this->renderSection('script'); ?>
 </body>
 
 </html>

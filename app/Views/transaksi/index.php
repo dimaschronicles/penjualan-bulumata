@@ -42,29 +42,31 @@
                         <?php
                         $i = 1;
                         foreach ($transaksi as $t) : ?>
-                            <tr>
-                                <td><?= $i++; ?></td>
-                                <td>TR-<?= $t['id_transaksi']; ?></td>
-                                <td><?= $t['nama_lengkap']; ?></td>
-                                <td>Rp <?= format_rupiah(intval($t['ongkir'] + $t['total_harga'])); ?>,00</td>
-                                <td>
-                                    <?php if ($t['status'] == 'pembayaran') : ?>
-                                        <span class="badge rounded-pill bg-warning"><?= $t['status']; ?></span>
-                                    <?php elseif ($t['status'] == 'menunggu') : ?>
-                                        <span class="badge rounded-pill bg-secondary"><?= $t['status']; ?></span>
-                                    <?php elseif ($t['status'] == 'dikirim') : ?>
-                                        <span class="badge rounded-pill bg-info"><?= $t['status']; ?></span>
-                                    <?php elseif ($t['status'] == 'selesai') : ?>
-                                        <span class="badge rounded-pill bg-success"><?= $t['status']; ?></span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <?php if ($t['status'] == 'menunggu') : ?>
-                                        <a href="/transaksi/kirim/<?= $t['id_transaksi']; ?>" class="btn btn-secondary">Kirim</a>
-                                    <?php endif; ?>
-                                    <a href="/transaksi/<?= $t['id_transaksi']; ?>" class="btn btn-info" target="_blank">Detail</a>
-                                </td>
-                            </tr>
+                            <?php if ($t['status'] != 'keranjang') : ?>
+                                <tr>
+                                    <td><?= $i++; ?></td>
+                                    <td>TR-<?= $t['id_transaksi']; ?></td>
+                                    <td><?= $t['nama_lengkap']; ?></td>
+                                    <td>Rp <?= format_rupiah(intval($t['ongkir'] + $t['total_harga'])); ?>,00</td>
+                                    <td>
+                                        <?php if ($t['status'] == 'pembayaran') : ?>
+                                            <span class="badge rounded-pill bg-warning"><?= $t['status']; ?></span>
+                                        <?php elseif ($t['status'] == 'menunggu') : ?>
+                                            <span class="badge rounded-pill bg-secondary"><?= $t['status']; ?></span>
+                                        <?php elseif ($t['status'] == 'dikirim') : ?>
+                                            <span class="badge rounded-pill bg-info"><?= $t['status']; ?></span>
+                                        <?php elseif ($t['status'] == 'selesai') : ?>
+                                            <span class="badge rounded-pill bg-success"><?= $t['status']; ?></span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($t['status'] == 'menunggu') : ?>
+                                            <a href="/transaksi/kirim/<?= $t['id_transaksi']; ?>" class="btn btn-secondary">Kirim</a>
+                                        <?php endif; ?>
+                                        <a href="/transaksi/<?= $t['id_transaksi']; ?>" class="btn btn-info" target="_blank">Detail</a>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

@@ -6,6 +6,7 @@ use Config\Services;
 use App\Models\UserModel;
 use App\Models\UserTokenModel;
 use App\Controllers\BaseController;
+use App\Models\TransaksiModel;
 
 class AuthController extends BaseController
 {
@@ -13,13 +14,15 @@ class AuthController extends BaseController
     {
         $this->user = new UserModel();
         $this->user_token = new UserTokenModel();
+        $this->transaksi = new TransaksiModel();
     }
 
     public function index()
     {
         $data = [
             'title' => 'Login',
-            'validation' => \Config\Services::validation()
+            'validation' => \Config\Services::validation(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('auth/index', $data);
@@ -29,7 +32,8 @@ class AuthController extends BaseController
     {
         $data = [
             'title' => 'Register',
-            'validation' => \Config\Services::validation()
+            'validation' => \Config\Services::validation(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('auth/register', $data);
@@ -234,7 +238,8 @@ class AuthController extends BaseController
     {
         $data = [
             'title' => 'Lupa Password',
-            'validation' => \Config\Services::validation()
+            'validation' => \Config\Services::validation(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('auth/forgot_password', $data);
@@ -306,6 +311,7 @@ class AuthController extends BaseController
         $data = [
             'title' => 'Ganti Password',
             'validation' => \Config\Services::validation(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('auth/change_password', $data);

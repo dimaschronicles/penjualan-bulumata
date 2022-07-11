@@ -44,13 +44,15 @@ $routes->post('/profile/changepassword', 'Profile::changePassword');
 // controller transaksi user
 // keranjang
 $routes->get('/cart', 'Transaction::cart');
+$routes->get('/transaction/editjumlah/(:num)', 'Transaction::editJumlah/$1');
 $routes->get('/beli/(:num)', 'Transaction::beli/$1');
 $routes->post('/addcart', 'Transaction::addCart');
 // checkout
-$routes->get('/transaction', 'Transaction::index');
-$routes->get('/transaction/pesan', 'Transaction::pesan');
+$routes->get('/transaction/transaksi/(:num)', 'Transaction::transaksi/$1');
+$routes->get('/transaction/pesan/(:num)', 'Transaction::pesan/$1');
 $routes->get('/riwayat', 'Transaction::riwayat');
-$routes->get('/invoice', 'Transaction::invoice');
+$routes->get('/riwayatpesan', 'Transaction::riwayatPesan');
+$routes->get('/invoice/(:num)', 'Transaction::invoice/$1');
 // bukti pembayaran
 $routes->get('/transaction/bukti/(:num)', 'Transaction::buktiBayar/$1');
 $routes->get('/transaction/upload/(:num)', 'Transaction::upload/$1');

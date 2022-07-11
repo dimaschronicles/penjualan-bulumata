@@ -3,9 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\KeranjangModel;
 use App\Models\ProdukModel;
-use App\Models\TransaksiDetailModel;
 use App\Models\TransaksiModel;
 use TCPDF;
 
@@ -14,9 +12,7 @@ class Transaction extends BaseController
     public function __construct()
     {
         $this->produk = new ProdukModel();
-        $this->keranjang = new KeranjangModel();
         $this->transaksi = new TransaksiModel();
-        $this->transaksi_detail = new TransaksiDetailModel();
     }
 
     public function beli($id)
@@ -24,6 +20,7 @@ class Transaction extends BaseController
         $data = [
             'title' => 'Produk',
             'produk' => $this->produk->getProduk($id),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/transaksi/beli', $data);
@@ -33,8 +30,8 @@ class Transaction extends BaseController
     {
         $data = [
             'title' => 'Keranjang',
-            'cart' => $this->keranjang->getCart(),
-            'total' => $this->keranjang->getTotal(),
+            'cart' => $this->transaksi->getTransaksi(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/keranjang/index', $data);
@@ -46,11 +43,12 @@ class Transaction extends BaseController
         $harga_produk = $this->request->getVar('harga_produk');
         $total_harga = intval($jumlah * $harga_produk);
 
-        $this->keranjang->save([
+        $this->transaksi->save([
             'id_user' => session()->get('id_user'),
             'id_produk' => $this->request->getVar('id_produk'),
-            'jumlah' => $jumlah,
+            'jumlah_produk' => $jumlah,
             'total_harga' => $total_harga,
+            'status' => 'keranjang',
             'date_created' => date('Y-m-d h:i:s'),
         ]);
 
@@ -59,55 +57,58 @@ class Transaction extends BaseController
         return redirect()->to('/');
     }
 
-    // proses transaksi/checkout
-    public function index()
+    public function editJumlah($id_transaksi = null)
     {
-        // $total = $this->db->table('transaksi')->select('total_harga')->where(['id_user' => session()->get('id_user'), 'status' => 'cart'])->selectSum('total_harga')->get()->getResultArray();
+        $jumlah = $this->request->getVar('jumlah');
+        $harga_produk = $this->request->getVar('harga_produk');
+        $total_harga = intval($jumlah * $harga_produk);
 
+        $this->transaksi->save([
+            'id_transaksi' => $id_transaksi,
+            'jumlah_produk' => $jumlah,
+            'total_harga' => $total_harga,
+        ]);
+
+        session()->setFlashdata('message', '<div class="alert alert-success"><strong>Jumlah produk</strong> berhasil diubah!</div>');
+
+        return redirect()->to('/cart');
+    }
+
+    // proses transaksi/checkout
+    public function transaksi($id_transaksi)
+    {
         $data = [
             'title' => 'Transaksi',
-            'produk' => $this->keranjang->getCart(),
-            'total' => $this->keranjang->getTotal(),
-            'user' =>  session()->get('id_user')
+            'produk' => $this->transaksi->getTransaksi($id_transaksi),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/transaksi/index', $data);
     }
 
-    public function pesan()
+    public function pesan($id_transaksi = null)
     {
-        // insert ke table transaksi
         $this->transaksi->save([
-            'id_user' => session()->get('id_user'),
-            'total_harga' => $this->request->getVar('total_harga'),
+            'id_transaksi' => $id_transaksi,
             'ongkir' => $this->request->getVar('ongkir'),
             'status'  => 'pembayaran',
             'time_created'  => date('Y-m-d h:i:s'),
         ]);
 
-        // insert ke table detail transaksi
-        $id_transaksi = $this->transaksi->insertID; // id terakhir dari table transaksi
-        $keranjang = $this->keranjang->getCart();
-        foreach ($keranjang as $k) {
-            $data = [
-                [
-                    'id_produk' => $k['id_produk'],
-                    'jumlah'  => $k['jumlah'],
-                    'id_transaksi'  => $id_transaksi,
-                ]
-            ];
-            $this->db->table('transaksi_detail')->insertBatch($data);
-        }
-
-        // hapus data yang ada di table keranjang berdasarkan id user yang transaksi
-        $id_user = session()->get('id_user');
-        $this->db->table('keranjang')->delete(['id_user' => $id_user]);
-
-        // pengurangan stok yang ada ditable produk (stok produk - jumlah transaksi) 
-
         session()->setFlashdata('message', '<div class="alert alert-success">Silahkan melakukan pembayaran & upload bukti pembayaran untuk proses selanjutnya!</div>');
 
-        return redirect()->to('/riwayat');
+        return redirect()->to('/riwayatpesan');
+    }
+
+    public function riwayatPesan()
+    {
+        $data = [
+            'title' => 'Riwayat Pemesanan',
+            'transaksi' => $this->transaksi->getTransaksi(),
+            'jumlahCart' => $this->transaksi->cartCount(),
+        ];
+
+        return view('home/transaksi/pesan', $data);
     }
 
     public function riwayat()
@@ -115,17 +116,16 @@ class Transaction extends BaseController
         $data = [
             'title' => 'Riwayat Pembelian',
             'transaksi' => $this->transaksi->getTransaksi(),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/transaksi/riwayat', $data);
     }
 
-    public function invoice()
+    public function invoice($id_transaksi)
     {
         $data = [
-            'produk' => $this->transaksi->getTransaksiProduk(),
-            'transaksi' => $this->transaksi->getTransaksi()[0],
-            'total' => $this->transaksi->getTotal()[0]
+            'transaksi' => $this->transaksi->getTransaksi($id_transaksi),
         ];
 
         // return view('home/transaksi/invoice', $data);
@@ -155,6 +155,7 @@ class Transaction extends BaseController
             'title' => 'Unggah Bukti Pembayaran',
             'validation' =>  \Config\Services::validation(),
             'transaksi' => $this->transaksi->getTransaksi($id_transaksi),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/transaksi/bukti', $data);
@@ -192,15 +193,24 @@ class Transaction extends BaseController
 
         session()->setFlashdata('message', '<div class="alert alert-success"><strong>Pesanan</strong> anda sedang divalidasi silahkan tunggu 1x24 jam!</div>');
 
-        return redirect()->to('/riwayat');
+        return redirect()->to('/riwayatpesan');
     }
 
     public function konfirmasi($id_transaksi)
     {
+        $id = $this->request->getVar('id_produk');
+        $jumlah = $this->request->getVar('jumlah_produk');
+        $getStok = $this->db->query("SELECT stok_produk FROM produk WHERE id_produk=$id")->getRowArray();
+        $total = intval($getStok['stok_produk']) - intval($jumlah);
+
+        $this->produk->save([
+            'id_produk' => $id,
+            'stok_produk' => $total,
+        ]);
+
         $data = [
             'status'  => 'selesai',
         ];
-
         $this->db->table('transaksi')->where('id_transaksi', $id_transaksi)->update($data);
 
         session()->setFlashdata('message', '<div class="alert alert-success"><strong>Terima kasih</strong> telah membeli produk ditoko kami!</div>');

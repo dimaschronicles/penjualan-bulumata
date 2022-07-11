@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\TransaksiModel;
 use App\Models\UserModel;
 
 class Profile extends BaseController
@@ -10,6 +11,7 @@ class Profile extends BaseController
     public function __construct()
     {
         $this->user = new UserModel();
+        $this->transaksi = new TransaksiModel();
     }
 
     public function index()
@@ -18,6 +20,7 @@ class Profile extends BaseController
             'title' => 'Profil',
             'validation' => \Config\Services::validation(),
             'user' => $this->user->find(session()->get('id_user')),
+            'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/profil/index', $data);

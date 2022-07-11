@@ -16,7 +16,15 @@
             <!-- /section title -->
 
             <div class="col-md-12">
-                <p>Aplikasi Penjualan ini dibuat untuk memenuhi tugas skripsi.</p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <ul class="footer-links">
+                            <li>
+                                <p>Pusat Bulu Mata Palsu dengan kualitas dan harga yang terbaik.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 

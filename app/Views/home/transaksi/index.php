@@ -56,20 +56,26 @@
                                 <div><strong>TOTAL</strong></div>
                             </div>
                             <div class="order-products">
-                                <?php foreach ($produk as $p) : ?>
-                                    <div class="order-col">
-                                        <div><?= $p['jumlah']; ?>x <?= $p['nama_produk']; ?></div>
-                                        <div>Rp <?= format_rupiah($p['total_harga']); ?></div>
-                                    </div>
-                                <?php endforeach; ?>
+                                <div class="order-col">
+                                    <div><?= $produk['jumlah_produk']; ?>x <?= $produk['nama_produk']; ?></div>
+                                    <div>Rp <?= format_rupiah($produk['total_harga']); ?></div>
+                                </div>
                             </div>
                             <div class="order-col">
                                 <div>Ongkir</div>
-                                <div><strong>Rp 20.000</strong></div>
+                                <?php if ($produk['total_harga'] < 50000) : ?>
+                                    <div><strong>Rp 10.000</strong></div>
+                                <?php elseif ($produk['total_harga'] < 100000) : ?>
+                                    <div><strong>Rp 20.000</strong></div>
+                                <?php endif; ?>
                             </div>
                             <div class="order-col">
                                 <div><strong>TOTAL</strong></div>
-                                <div><strong class="order-total">Rp <?= format_rupiah(intval($total[0]['total_harga']) + 20000); ?></strong></div>
+                                <?php if ($produk['total_harga'] < 50000) : ?>
+                                    <div><strong class="order-total">Rp <?= format_rupiah(intval($produk['total_harga']) + 10000); ?></strong></div>
+                                <?php elseif ($produk['total_harga'] < 100000) : ?>
+                                    <div><strong class="order-total">Rp <?= format_rupiah(intval($produk['total_harga']) + 20000); ?></strong></div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <!-- <div class="payment-method">
@@ -91,11 +97,14 @@
                                 I've read and accept the <a href="#">terms & conditions</a>
                             </label>
                         </div> -->
-                        <form action="/transaction/pesan" method="POST">
+                        <form action="/transaction/pesan/<?= $produk['id_transaksi']; ?>" method="POST">
                             <?= csrf_field(); ?>
                             <!-- transaksi -->
-                            <input type="hidden" name="total_harga" value="<?= intval($total[0]['total_harga']); ?>">
-                            <input type="hidden" name="ongkir" value="<?= intval(20000); ?>">
+                            <?php if ($produk['total_harga'] < 50000) : ?>
+                                <input type="hidden" name="ongkir" value="<?= intval(10000); ?>">
+                            <?php elseif ($produk['total_harga'] < 100000) : ?>
+                                <input type="hidden" name="ongkir" value="<?= intval(20000); ?>">
+                            <?php endif; ?>
                             <button type="submit" class="primary-btn order-submit" style="width: 100%;">Pesan</button>
                         </form>
                     </div>

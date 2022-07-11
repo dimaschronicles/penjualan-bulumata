@@ -60,15 +60,15 @@
                     <div class="header-ctn">
 
                         <!-- Cart -->
-                        <?php if (session('role') == 2) : ?>
-                            <div>
-                                <a href="/cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Your Cart</span>
-                                    <!-- <div class="qty">3</div> -->
-                                </a>
-                            </div>
-                        <?php endif; ?>
+                        <div>
+                            <a href="/cart">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                                <?php if ($jumlahCart) : ?>
+                                    <div class="qty"><?= $jumlahCart; ?></div>
+                                <?php endif; ?>
+                            </a>
+                        </div>
                         <!-- /Cart -->
 
                         <?php if (session('role') == 1) : ?>

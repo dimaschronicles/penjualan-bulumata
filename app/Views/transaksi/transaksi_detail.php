@@ -54,13 +54,11 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="total" class="col-sm-2 col-form-label">Daftar Produk Yang Dibeli</label>
+                    <label for="total" class="col-sm-2 col-form-label">Produk Yang Dibeli</label>
                     <div class="col-sm-10">
                         <ul class="list-group">
-                            <?php $i = 1;
-                            foreach ($transaksiProduk as $p) : ?>
-                                <li class="list-group-item"><?= $i++; ?>. <?= $p['nama_produk']; ?> | Jumlah : <?= $p['jumlah']; ?></li>
-                            <?php endforeach; ?>
+                            <li class="list-group-item">Nama : <?= $transaksi['nama_produk']; ?></li>
+                            <li class="list-group-item">Jumlah : <?= $transaksi['jumlah_produk']; ?></li>
                         </ul>
                     </div>
                 </div>
