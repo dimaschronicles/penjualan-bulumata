@@ -17,10 +17,6 @@
                     <i class="fas fa-plus"></i>
                     Tambah Stok Produk
                 </a>
-                <a href="/stock/min" class="btn btn-secondary">
-                    <i class="fas fa-minus"></i>
-                    Kurang Stok Produk
-                </a>
             </div>
         </div>
 

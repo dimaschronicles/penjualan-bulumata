@@ -38,7 +38,9 @@ $routes->get('/contact', 'Home::contact');
 
 // profile
 $routes->get('/profile', 'Profile::index');
-$routes->post('/profile/edit', 'Profile::editProfile');
+$routes->get('/profile/edit', 'Profile::edit');
+$routes->get('/profile/change', 'Profile::change');
+$routes->post('/profile/editprofile', 'Profile::editProfile');
 $routes->post('/profile/changepassword', 'Profile::changePassword');
 
 // controller transaksi user
@@ -92,9 +94,7 @@ $routes->delete('category/(:num)', 'Category::delete/$1');
 // stok
 $routes->get('/stock', 'Stock::index');
 $routes->get('stock/new', 'Stock::new');
-$routes->get('stock/min', 'Stock::min');
 $routes->post('stock', 'Stock::create');
-$routes->post('stock/min', 'Stock::save');
 
 // transaksi admin
 $routes->get('/transaksi', 'Transaksi::index');

@@ -18,12 +18,23 @@ class Profile extends BaseController
     {
         $data = [
             'title' => 'Profil',
-            'validation' => \Config\Services::validation(),
             'user' => $this->user->find(session()->get('id_user')),
             'jumlahCart' => $this->transaksi->cartCount(),
         ];
 
         return view('home/profil/index', $data);
+    }
+
+    public function edit()
+    {
+        $data = [
+            'title' => 'Edit Profil',
+            'validation' => \Config\Services::validation(),
+            'user' => $this->user->where('id_user', session()->get('id_user'))->first(),
+            'jumlahCart' => $this->transaksi->cartCount(),
+        ];
+
+        return view('home/profil/edit', $data);
     }
 
     public function editProfile()
@@ -62,7 +73,7 @@ class Profile extends BaseController
         //         ]
         //     ],
         // ])) {
-        //     return redirect()->to('/profile')->withInput();
+        //     return redirect()->to('/profile/edit')->withInput();
         // }
 
         $this->user->save([
@@ -74,9 +85,21 @@ class Profile extends BaseController
             'no_hp' => $this->request->getVar('no_hp'),
         ]);
 
-        session()->setFlashdata('message', '<div class="alert alert-success text-center">Profil berhasil diubah!</div>');
+        session()->setFlashdata('message', '<div class="alert alert-success"><strong>Profil</strong> berhasil diubah!</div>');
 
         return redirect()->to('/profile');
+    }
+
+    public function change()
+    {
+        $data = [
+            'title' => 'Ganti Password',
+            'validation' => \Config\Services::validation(),
+            'user' => $this->user->where('id_user', session()->get('id_user'))->first(),
+            'jumlahCart' => $this->transaksi->cartCount(),
+        ];
+
+        return view('home/profil/change', $data);
     }
 
     public function changePassword()
@@ -106,7 +129,7 @@ class Profile extends BaseController
                 ]
             ]
         ])) {
-            return redirect()->to('/profile')->withInput();
+            return redirect()->to('/profile/change')->withInput();
         }
 
         $user = $this->user->where('username', session()->get('username'))->first();
@@ -116,11 +139,11 @@ class Profile extends BaseController
 
         if (!password_verify($current_password, $user['password'])) {
             session()->setFlashdata('message', '<div class="alert alert-danger">Password saat ini salah!</div>');
-            return redirect()->to('/profile');
+            return redirect()->to('/profile/change');
         } else {
             if ($current_password == $new_password) {
                 session()->setFlashdata('message', '<div class="alert alert-danger">Password baru harus berbeda dengan password saat ini!</div>');
-                return redirect()->to('/profile');
+                return redirect()->to('/profile/change');
             } else {
                 $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
 
