@@ -49,6 +49,7 @@ $routes->get('/cart', 'Transaction::cart');
 $routes->get('/transaction/editjumlah/(:num)', 'Transaction::editJumlah/$1');
 $routes->get('/beli/(:num)', 'Transaction::beli/$1');
 $routes->post('/addcart', 'Transaction::addCart');
+$routes->get('/transaction/deletecart/(:num)', 'Transaction::deleteCart/$1');
 // checkout
 $routes->get('/transaction/transaksi/(:num)', 'Transaction::transaksi/$1');
 $routes->get('/transaction/pesan/(:num)', 'Transaction::pesan/$1');

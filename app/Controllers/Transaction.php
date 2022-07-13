@@ -86,6 +86,13 @@ class Transaction extends BaseController
         return view('home/transaksi/index', $data);
     }
 
+    public function deleteCart($id)
+    {
+        $this->transaksi->delete($id);
+        session()->setFlashdata('message', '<div class="alert alert-success">Data <strong>produk</strong> berhasil dihapus!</div>');
+        return redirect()->to('/cart');
+    }
+
     public function pesan($id_transaksi = null)
     {
         $this->transaksi->save([

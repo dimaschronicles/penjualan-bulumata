@@ -38,7 +38,7 @@
                                 </td>
                                 <td>
                                     <a href="/transaction/transaksi/<?= $c['id_transaksi']; ?>" class="btn btn-success">Transaksi</a>
-                                    <a href="" class="btn btn-danger">Hapus</a>
+                                    <a href="/transaction/deletecart/<?= $c['id_transaksi']; ?>" onclick="return confirm('Apakah data ini akan dihapus?')" class="btn btn-danger">Hapus</a>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal<?= $c['id_transaksi']; ?>">Edit</button>
                                 </td>
                             </tr>
