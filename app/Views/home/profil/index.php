@@ -22,7 +22,9 @@
             <div class="col-md-6">
                 <div class="panel panel-default text-center">
                     <div class="panel-body">
-                        <img src="/img/default.png" class="img-circle" width="130px">
+                        <div class="image-cropper">
+                            <img src="/img/user/<?= $user['foto']; ?>" class="foto-profil">
+                        </div>
                         <h3 style="margin-top: 10px;"><?= session('username'); ?></h3>
                         <p style="margin-bottom: 10px;"><?= $user['nama_lengkap'] ?> | <?= $user['email']; ?></p>
                         <a class="btn btn-primary" href="/profile/edit">Edit Profile</a>

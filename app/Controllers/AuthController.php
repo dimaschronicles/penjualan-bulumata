@@ -119,10 +119,12 @@ class AuthController extends BaseController
                 ]
             ],
             'no_hp' => [
-                'rules' => 'required|numeric',
+                'rules' => 'required|numeric|min_length[11]|max_length[13]',
                 'errors' => [
                     'required' => 'No HP WA harus diisi!',
                     'numeric' => 'No HP WA harus angka!',
+                    'min_length' => 'No HP WA minimal 11 angka!',
+                    'max_length' => 'No HP WA maksimal 13 angka!',
                 ]
             ],
             'alamat' => [
@@ -132,17 +134,16 @@ class AuthController extends BaseController
                 ]
             ],
             'password' => [
-                'rules' => 'trim|required|min_length[8]',
+                'rules' => 'trim|required|matches[password_conf]|password_strength[7]',
                 'errors' => [
                     'required' => 'Password harus diisi!',
-                    'min_length' => 'Password kurang dari 8 karakter!',
+                    'matches' => 'Password harus tidak sama Konfirmasi Password!',
                 ]
             ],
             'password_conf' => [
-                'rules' => 'trim|required|min_length[8]|matches[password]',
+                'rules' => 'trim|required|matches[password]|password_strength[7]',
                 'errors' => [
                     'required' => 'Konfirmasi Password harus diisi!',
-                    'min_length' => 'Konfirmasi Password kurang dari 8 karakter!',
                     'matches' => 'Konfirmasi Password tidak sama dengan Password!',
                 ]
             ]
@@ -159,6 +160,7 @@ class AuthController extends BaseController
             'alamat' => $this->request->getVar('alamat'),
             'no_hp' => $this->request->getVar('no_hp'),
             'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+            'foto' => 'default.png',
             'role' => 2,
             'is_active' => 0,
         ]);

@@ -23,9 +23,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Data User</strong></div>
                     <div class="panel-body">
-                        <form action="/profile/editprofile" method="POST">
+                        <form action="/profile/editprofile" method="POST" enctype="multipart/form-data">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="id_user" value="<?= session('id_user') ?>">
+                            <input type="hidden" name="oldImage" value="<?= $user['foto'] ?>">
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input class="input" type="text" name="username" id="username" value="<?= $user['username']; ?>" readonly>
@@ -50,6 +51,14 @@
                                 <textarea class="input" type="text" name="alamat" id="alamat"><?= $user['alamat']; ?></textarea>
                                 <span id="helpBlock2" class="help-block"><?= $validation->getError('alamat'); ?></span>
                             </div>
+                            <div class="form-group <?= ($validation->hasError('foto')) ? 'has-error' : ''; ?>">
+                                <label for="foto">Foto</label>
+                                <input type="file" name="foto" id="foto" accept="image/*" onchange="loadFile(event)">
+                                <span id="helpBlock2" class="help-block"><?= $validation->getError('foto'); ?></span>
+                            </div>
+                            <div class="form-group">
+                                <img src="/img/user/<?= $user['foto']; ?>" id="foto-profil" width="150px">
+                            </div>
                             <button type="submit" class="btn btn-success">Simpan Profil</button>
                             <a class="btn btn-default" href="/profile">Kembali</a>
                         </form>
@@ -61,4 +70,14 @@
     </div>
     <!-- /container -->
 </div>
+<script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('foto-profil');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
+</script>
 <?= $this->endSection(); ?>

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/css/font-awesome.min.css">
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>/css/my-style.css" />
 
 </head>
 
