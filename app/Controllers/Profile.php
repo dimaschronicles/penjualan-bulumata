@@ -53,14 +53,14 @@ class Profile extends BaseController
                     'valid_email' => 'Email tidak valid!',
                 ]
             ],
-            'nama_lengkap' => [
+            'nama' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Nama Lengkap harus diisi!',
                 ]
             ],
             'no_hp' => [
-                'rules' => 'required|numeric|min_length[11]|max_length[13]',
+                'rules' => 'numeric|min_length[11]|max_length[13]',
                 'errors' => [
                     'required' => 'No HP WA harus diisi!',
                     'numeric' => 'No HP WA harus angka!',
@@ -68,10 +68,10 @@ class Profile extends BaseController
                     'max_length' => 'No HP WA maksimal 13 angka!',
                 ]
             ],
-            'alamat' => [
-                'rules' => 'required',
+            'foto' => [
+                'rules' => 'is_image[foto]',
                 'errors' => [
-                    'required' => 'Alamat Lengkap harus diisi!',
+                    'is_image' => 'Foto tidak valid!',
                 ]
             ],
         ])) {
@@ -86,7 +86,7 @@ class Profile extends BaseController
             // generate nama file random
             $imgName = $imgFile->getRandomName();
             // upload gambar
-            $imgFile->move('img/user', $imgName);
+            $imgFile->move('img/user/', $imgName);
 
             if ($this->request->getVar('oldImage') == 'default.png') {
                 //

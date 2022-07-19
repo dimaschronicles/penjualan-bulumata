@@ -360,7 +360,7 @@ class AuthController extends BaseController
 
     public function logout()
     {
-        $array_items = ['id_user', 'username', 'role'];
+        $array_items = ['id_user', 'username', 'role', 'email', 'alamat'];
         session()->remove($array_items);
         session()->setFlashdata('message', '<div class="alert alert-success text-center" role="alert">Anda berhasil keluar!</div>');
         return redirect()->to('/login')->withInput();

@@ -33,7 +33,7 @@
                     <div class="footer">
                         <h3 class="footer-title">Pengiriman</h3>
                         <ul class="footer-links">
-                            <li><img src="/img/jne.png" width="100px"></li>
+                            <li><img src="/img/jne.png" width="100px" style="border: 2px solid white; padding: 5px; border-radius: 5%;"></li>
                         </ul>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <div class="footer">
                         <h3 class="footer-title">Pembayaran</h3>
                         <ul class="footer-links">
-                            <li><img src="/img/logo_pembayaran.png" width="200px"></li>
+                            <li><img src="/img/logo_pembayaran.png" width="200px" style="border: 2px solid white; padding: 5px; border-radius: 5%;"></li>
                         </ul>
                     </div>
                 </div>
