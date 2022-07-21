@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2022 at 07:37 AM
+-- Generation Time: Jul 21, 2022 at 04:28 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -108,9 +108,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_produk`, `jumlah_produk`, `total_harga`, `ongkir`, `bukti_bayar`, `status`, `date_created`) VALUES
-(4, 7, 30, 11, 29700, 10000, '1657548580_7d24fc35bf735f0e8bf3.jpg', 'selesai', '2022-07-11 08:46:13'),
-(5, 7, 29, 11, 30800, 10000, '1657550094_2158150f23c6ad68296e.jpg', 'selesai', '2022-07-11 09:34:14'),
-(6, 7, 32, 12, 36000, 10000, '1657551215_5e01a25e1e030dc93b3f.jpg', 'selesai', '2022-07-11 09:34:28');
+(2, 7, 30, 1, 2700, 10000, NULL, 'selesai', '2022-07-21 09:12:09');
 
 -- --------------------------------------------------------
 
@@ -126,6 +124,7 @@ CREATE TABLE `user` (
   `nama_lengkap` varchar(255) NOT NULL,
   `alamat` text NOT NULL,
   `no_hp` varchar(16) NOT NULL,
+  `foto` varchar(128) NOT NULL,
   `role` int(11) NOT NULL,
   `is_active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -134,12 +133,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `username`, `password`, `email`, `nama_lengkap`, `alamat`, `no_hp`, `role`, `is_active`) VALUES
-(1, 'dimaschronicles', '$2y$10$OLZyoSr5VsOXtftwLT732u4c9m2/UYL09Gop0HeDsdb24DjwkZSAW', 'dimaschronicles@gmail.com', 'Dimas Cahyo', 'null', '123', 1, 1),
-(4, 'anggie', '$2y$10$5tv6kvSQQqGTzeYaviKsD.tzNQABMEroZS/vYCXNyNTXycHydU7Ti', 'alkuffar2@gmail.com', 'Anggie Feb', 'Jatinegara, Sempors', '12345678911', 2, 1),
-(5, 'farhan', '$2y$10$VD.NlVBNAble/4OoaRSNR.5GnE6kZ5W.yt0jGJtrT/4x/tjjvyTE2', 'farhan@gmail.com', 'Farhan R', 'Bantar Kawung, Bumiayu', '00819044023', 2, 1),
-(7, 'dimasc', '$2y$10$qzTSRzx0BsAYTqtY8WUS/O/4Nza3ungnfyif60GP65FZ6axkQvPCq', 'dimas@gmail.com', 'Dimas Cahyo Nur Aditya', 'Pliken RT6/6, Kec. Kembaran, Kab. Banyumas, Jawa Tengah, 53182', '081903304446', 2, 1),
-(8, 'pahlevi', '$2y$10$OLZyoSr5VsOXtftwLT732u4c9m2/UYL09Gop0HeDsdb24DjwkZSAW', 'pahlevi@gmail.com', 'Adam', 'Pwt', '123', 1, 1);
+INSERT INTO `user` (`id_user`, `username`, `password`, `email`, `nama_lengkap`, `alamat`, `no_hp`, `foto`, `role`, `is_active`) VALUES
+(1, 'dimaschronicles', '$2y$10$OLZyoSr5VsOXtftwLT732u4c9m2/UYL09Gop0HeDsdb24DjwkZSAW', 'dimaschronicles@gmail.com', 'Dimas Cahyo', 'null', '123', 'default.png', 1, 1),
+(4, 'anggie', '$2y$10$5tv6kvSQQqGTzeYaviKsD.tzNQABMEroZS/vYCXNyNTXycHydU7Ti', 'alkuffar2@gmail.com', 'Anggie Feb', 'Jatinegara, Sempors', '12345678911', 'default.png', 2, 1),
+(5, 'farhan', '$2y$10$VD.NlVBNAble/4OoaRSNR.5GnE6kZ5W.yt0jGJtrT/4x/tjjvyTE2', 'farhan@gmail.com', 'Farhan R', 'Bantar Kawung, Bumiayu', '00819044023', 'default.png', 2, 1),
+(7, 'dimasc', '$2y$10$qzTSRzx0BsAYTqtY8WUS/O/4Nza3ungnfyif60GP65FZ6axkQvPCq', 'dimas@gmail.com', 'Dimas Cahyo Nur Aditya', 'Pliken RT6/6, Kec. Kembaran, Kab. Banyumas, Jawa Tengah, 53182', '081903304446', 'default.png', 2, 1),
+(8, 'pahlevi', '$2y$10$OLZyoSr5VsOXtftwLT732u4c9m2/UYL09Gop0HeDsdb24DjwkZSAW', 'pahlevi@gmail.com', 'Adam', 'Pwt', '123', 'default.png', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -207,7 +206,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`

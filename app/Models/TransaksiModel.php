@@ -37,6 +37,7 @@ class TransaksiModel extends Model
         if ($id_transaksi == null) {
             return $this->db->table('transaksi')->select('*')
                 ->where('user.id_user', session('id_user'))
+                ->orderBy('date_created', 'desc')
                 ->join('produk', 'produk.id_produk = transaksi.id_produk')
                 ->join('user', 'user.id_user = transaksi.id_user')
                 ->get()->getResultArray();

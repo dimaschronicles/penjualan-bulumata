@@ -56,6 +56,7 @@ $routes->get('/transaction/pesan/(:num)', 'Transaction::pesan/$1');
 $routes->get('/riwayat', 'Transaction::riwayat');
 $routes->get('/riwayatpesan', 'Transaction::riwayatPesan');
 $routes->get('/invoice/(:num)', 'Transaction::invoice/$1');
+$routes->get('/hapus/(:num)', 'Transaction::hapus/$1');
 // bukti pembayaran
 $routes->get('/transaction/bukti/(:num)', 'Transaction::buktiBayar/$1');
 $routes->get('/transaction/upload/(:num)', 'Transaction::upload/$1');

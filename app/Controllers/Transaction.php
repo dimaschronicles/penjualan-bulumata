@@ -223,4 +223,11 @@ class Transaction extends BaseController
         session()->setFlashdata('message', '<div class="alert alert-success"><strong>Terima kasih</strong> telah membeli produk ditoko kami!</div>');
         return redirect()->to('/riwayat');
     }
+
+    public function hapus($id_transaksi)
+    {
+        $this->db->table('transaksi')->where('id_transaksi', $id_transaksi)->delete();
+        session()->setFlashdata('message', '<div class="alert alert-success"><strong>Pesanan</strong> dibatalkan!</div>');
+        return redirect()->to('/riwayatpesan');
+    }
 }

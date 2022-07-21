@@ -59,8 +59,9 @@
                                             </td>
                                             <td>
                                                 <?php if ($t['status'] == 'pembayaran') : ?>
-                                                    <a href="/invoice/<?= $t['id_transaksi']; ?>" class="btn btn-danger" target="_blank">Nota</a>
+                                                    <a href="/invoice/<?= $t['id_transaksi']; ?>" class="btn btn-info" target="_blank">Nota</a>
                                                     <a href="/transaction/bukti/<?= $t['id_transaksi']; ?>" class="btn btn-warning">Upload</a>
+                                                    <a href="/hapus/<?= $t['id_transaksi']; ?>" class="btn btn-danger" onclick="return confirm('Apakah pesanan ini akan dihapus?')">Hapus</a>
                                                 <?php endif; ?>
                                                 <?php if ($t['status'] == 'dikirim') : ?>
                                                     <!-- <a href="/transaction/konfirmasi/<?= $t['id_transaksi']; ?>" class="btn btn-primary">Konfirmasi</a> -->
