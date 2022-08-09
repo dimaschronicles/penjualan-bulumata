@@ -103,6 +103,9 @@ $routes->get('/transaksi', 'Transaksi::index');
 $routes->get('/transaksi/(:num)', 'Transaksi::show/$1');
 $routes->get('/transaksi/kirim/(:num)', 'Transaksi::kirim/$1');
 
+// komentar
+$routes->get('/komentar/tulis/(:num)', 'Komentar::tulis/$1');
+$routes->post('/komentar/create', 'Komentar::create');
 
 
 /*

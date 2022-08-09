@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\KomentarModel;
 use App\Models\ProdukModel;
 use App\Models\TransaksiModel;
 use TCPDF;
@@ -13,6 +14,7 @@ class Transaction extends BaseController
     {
         $this->produk = new ProdukModel();
         $this->transaksi = new TransaksiModel();
+        $this->komentar = new KomentarModel();
     }
 
     public function beli($id)
@@ -21,6 +23,7 @@ class Transaction extends BaseController
             'title' => 'Produk',
             'produk' => $this->produk->getProduk($id),
             'jumlahCart' => $this->transaksi->cartCount(),
+            'komentar' => $this->komentar->findKomentar(),
         ];
 
         return view('home/transaksi/beli', $data);
