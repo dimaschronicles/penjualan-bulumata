@@ -106,6 +106,9 @@ $routes->get('/transaksi/kirim/(:num)', 'Transaksi::kirim/$1');
 // komentar
 $routes->get('/komentar/tulis/(:num)', 'Komentar::tulis/$1');
 $routes->post('/komentar/create', 'Komentar::create');
+$routes->get('/komentar/edit/(:num)/(:num)', 'Komentar::edit/$1/$2');
+$routes->get('/komentar/update/(:num)', 'Komentar::update/$1');
+$routes->get('/komentar/delete/(:num)', 'Komentar::delete/$1');
 
 
 /*

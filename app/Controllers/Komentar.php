@@ -53,4 +53,50 @@ class Komentar extends BaseController
 
         return redirect()->to('/beli' . '/' . $this->request->getVar('id_produk'));
     }
+
+    public function edit($id_komentar, $id_produk)
+    {
+        $data = [
+            'title' => 'Edit Komentar',
+            'jumlahCart' => $this->transaksi->cartCount(),
+            'validation' => Services::validation(),
+            'produk' => $this->produk->getProduk($id_produk),
+            'komentar' => $this->komentar->findKomentar($id_komentar),
+        ];
+
+        return view('home/transaksi/komentar_edit', $data);
+    }
+
+    public function update()
+    {
+        if (!$this->validate([
+            'isi_komentar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Komentar harus diisi!'
+                ]
+            ],
+        ])) {
+            return redirect()->to('/komentar/edit/' . $this->request->getVar('id_komentar') . '/' . $this->request->getVar('id_produk'))->withInput();
+        }
+
+        $this->komentar->save([
+            'id_komentar' => $this->request->getVar('id_komentar'),
+            'id_user' => $this->request->getVar('id_user'),
+            'id_produk' => $this->request->getVar('id_produk'),
+            'isi_komentar' => $this->request->getVar('isi_komentar'),
+            'tanggal_komentar' => $this->request->getVar('tanggal_waktu'),
+        ]);
+
+        session()->setFlashdata('message', '<div class="alert alert-success"><strong>Komentar</strong> berhasil diubah!</div>');
+
+        return redirect()->to('/beli' . '/' . $this->request->getVar('id_produk'));
+    }
+
+    public function delete($id_komentar, $id_produk)
+    {
+        $this->komentar->delete($id_komentar);
+        session()->setFlashdata('message', '<div class="alert alert-success"><strong>Komentar</strong> berhasil dihapus!</div>');
+        return redirect()->to('/beli' . '/' . $id_produk);
+    }
 }

@@ -3,6 +3,9 @@
 <div class="container">
     <div id="breadcrumb" class="section">
         <div class="row">
+
+            <?= session()->getFlashdata('message'); ?>
+
             <div class="col-md-12">
                 <h3 class="breadcrumb-header">Produk</h3>
                 <ul class="breadcrumb-tree">
@@ -119,6 +122,10 @@
                                                     <div class="review-heading">
                                                         <h5 class="name"><?= $k['nama_lengkap']; ?></h5>
                                                         <p class="date"><?= $k['tanggal_komentar']; ?></p>
+                                                        <?php if (session('id_user') == $k['id_user']) : ?>
+                                                            <a href="/komentar/edit/<?= $k['id_komentar']; ?>/<?= $k['id_produk']; ?>">Edit</a>
+                                                            <a href="/komentar/delete/<?= $k['id_komentar']; ?>/<?= $k['id_produk']; ?>" onclick="return confirm('Apakah komentar ini akan dihapus?')">Hapus</a>
+                                                        <?php endif; ?>
                                                     </div>
                                                     <div class="review-body">
                                                         <p><?= $k['isi_komentar']; ?></p>
